@@ -5,7 +5,7 @@ export const sqliteStorage = {
       if (response.ok) {
         const data = await response.json();
         console.log('Data fetched from SQLite:', data.value);
-        return data.value || null; // Access the `value` property from the response
+        return data.value ? JSON.parse(data.value) : null;
       }
     } catch (error) {
       console.error('Error fetching data from SQLite:', error);
