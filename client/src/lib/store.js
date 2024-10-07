@@ -23,11 +23,4 @@ const useStore = create(
   )
 );
 
-(async () => {
-  const storedCount = await sqliteStorage.getItem('count');
-  if (storedCount !== null) {
-    useStore.setState({ count: storedCount });
-  }
-})();
-
 export default useStore;
