@@ -44,7 +44,6 @@ app.post('/api/set-item', (req, res) => {
 });
 
 // API route to get data from SQLite
-// API route to get data from SQLite
 app.get('/api/get-item/:key', (req, res) => {
   const key = req.params.key;
   db.get('SELECT value FROM storeData WHERE key = ?', [key], (err, row) => {
@@ -52,7 +51,7 @@ app.get('/api/get-item/:key', (req, res) => {
       console.error('Error retrieving item from SQLite:', err);
       return res.status(500).json({ error: 'Failed to retrieve item' });
     }
-    // If a row is found, attempt to parse the value; if not, return null.
+    
     let value = null;
     try {
       value = row ? JSON.parse(row.value) : null;
