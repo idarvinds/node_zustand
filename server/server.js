@@ -13,17 +13,19 @@ app.use(cors());
 
 // Set up SQLite database
 const dbFilePath = path.join(__dirname, 'zustandStorage.db');
-const db = new sqlite3.Database(dbFilePath, (err) => {
+const db = new sqlite3.Database(dbFilePath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
   if (err) {
     console.error('Error opening SQLite database:', err);
   } else {
     console.log(`Connected to SQLite database at ${dbFilePath}`);
-    db.run(`
-      CREATE TABLE IF NOT EXISTS storeData (
-        key TEXT PRIMARY KEY,
-        value TEXT
-      )
-    `);
+    db.serialize(() => { 
+        db.run(`
+        CREATE TABLE IF NOT EXISTS storeData (
+          key TEXT PRIMARY KEY,
+          value TEXT
+        )
+      `);
+    });
   }
 });
 
